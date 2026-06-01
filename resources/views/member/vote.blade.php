@@ -3,6 +3,9 @@
 @section('title', 'Vote Now')
 
 @section('content')
+    @auth
+        <p class="text-lg">Welcome, {{ auth()->user()->name }}.</p>
+    @endauth
     <h1>Vote for your club leaders</h1>
     <p class="text-sm">Choose one candidate per position. Once your vote is recorded, it is final for that position.</p>
 
