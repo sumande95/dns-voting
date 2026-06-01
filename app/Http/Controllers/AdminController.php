@@ -80,13 +80,20 @@ class AdminController extends Controller
         $this->authorizeAdmin();
 
         $data = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'names' => ['required', 'string'],
             'position_id' => ['required', 'exists:positions,id'],
-            'member_id' => ['nullable', 'exists:users,id'],
         ]);
 
-        Candidate::create($data);
+        $names = array_filter(array_map('trim', preg_split('/[\r\n]+/', $data['names'])));
 
-        return back()->with('success', 'Candidate added successfully.');
+        foreach ($names as $name) {
+            Candidate::create([
+                'name' => $name,
+                'position_id' => $data['position_id'],
+            ]);
+        }
+
+        $count = count($names);
+        return back()->with('success', "{$count} candidate(s) added successfully.");
     }
 }

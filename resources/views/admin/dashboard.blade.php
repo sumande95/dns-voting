@@ -46,9 +46,12 @@
 
     <section style="margin-top:2rem;">
         <h2>Add new candidate</h2>
+        <p class="text-sm">Enter one candidate name per line to add multiple candidates at once for the same position.</p>
         <form action="{{ route('admin.candidates.store') }}" method="post" class="stack" style="margin-top:1rem;">
             @csrf
-            <label>Candidate name <input type="text" name="name" class="input" required /></label>
+            <label>Candidate names
+                <textarea name="names" class="input" rows="4" placeholder="Candidate One\nCandidate Two\nCandidate Three" required></textarea>
+            </label>
             <label>Position
                 <select name="position_id" class="select" required>
                     <option value="">Choose position</option>
@@ -57,15 +60,7 @@
                     @endforeach
                 </select>
             </label>
-            <label>Optional linked member
-                <select name="member_id" class="select">
-                    <option value="">None</option>
-                    @foreach($members as $member)
-                        <option value="{{ $member->id }}">{{ $member->name }} ({{ $member->email }})</option>
-                    @endforeach
-                </select>
-            </label>
-            <button type="submit" class="button button-primary">Add candidate</button>
+            <button type="submit" class="button button-primary">Add candidate(s)</button>
         </form>
     </section>
 
